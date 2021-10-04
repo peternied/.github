@@ -1,0 +1,10 @@
+{
+  "name": "Developer Certificate of Origin Check",
+  "description": "DCO workflow template.",
+  "iconName": "blank-icon",
+  "categories": [
+  ],
+  "filePatterns": [
+      "*"
+  ]
+}
