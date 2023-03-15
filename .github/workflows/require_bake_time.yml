@@ -21,6 +21,13 @@ jobs:
               repo: context.repo.repo,
               labels: ['bake-time']
             });
+
+            await github.rest.checks.createSuite({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head_sha: context.sha,
+            });
+
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
