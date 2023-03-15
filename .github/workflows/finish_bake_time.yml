@@ -10,7 +10,7 @@ jobs:
     name: "Finish baking pull requests"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v5
+      - uses: peternied/bake-time/finish-baking@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           delay-hours: 0
