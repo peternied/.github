@@ -6,28 +6,28 @@ on:
       - opened
       - synchronize
 
-jobs:
-  require_bake_time:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Add a bake time delay before merge is allowed
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['bake-time']
-            });
-            const { data: result} = await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.sha,
-              state: 'failure',
-              context: 'Bake time delay',
-              description: 'Waiting for the bake time delay to pass before merging'
-            });
+  jobs:
+    require_bake_time:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Add a bake time delay before merge is allowed
+          uses: actions/github-script@v5
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['bake-time']
+              });
+              const { data: result} = await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: context.sha,
+                state: 'failure',
+                context: 'Bake time delay',
+                description: 'Waiting for the bake time delay to pass before merging'
+              });
 
-            console.log(`Result of writing the commit status {result}`);
+              console.log(`Result of writing the commit status {result}`);
