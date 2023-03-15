@@ -36,8 +36,8 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: pr.head.sha,
-                check_name: 'Bake Time Delayed Check'
               });
+              console.log(`Found check runs associated with SHA${pr.head.sha}, runs: ${checkRuns}.`)
 
               const checkRun = checkRuns.check_runs[0];
               console.log(`Found check run for PR #${pr.number}, check run id ${checkRun.id}`);
