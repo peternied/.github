@@ -54,7 +54,7 @@ jobs:
                 });
 
                 // Mark the status check as successful
-                await github.rest.checks.update({
+                const { data: checkUpdate } = await github.rest.checks.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   check_run_id: checkRun.id,
@@ -66,6 +66,7 @@ jobs:
                   }
                 });
                 console.log(`Check marked as successful for PR #${pr.number}.`);
+                console.log(`Detailed check update message ${JSON.stringify(checkUpdate, undefined, 3)}`);
               } else {
                 const timeRemaining = (delayMilliseconds - (now - updatedAt)) / (millisInAnHour);
                 console.log(`PR #${pr.number} still needs to wait for ${timeRemaining.toFixed(2)} hours before the delay is over.`);
