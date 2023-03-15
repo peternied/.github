@@ -22,14 +22,14 @@ jobs:
               labels: ['bake-time']
             });
 
-            console.log(`Add label result, ${JSON.stringify(result1), undefined, 3}`);
+            console.log(`Add label result, ${JSON.stringify(result1, undefined, 3)}`);
 
             const { data: result2 } = await github.rest.checks.createSuite({
               owner: context.repo.owner,
               repo: context.repo.repo,
               head_sha: context.sha,
             });
-            console.log(`Add create suite result, ${JSON.stringify(result2), undefined, 3}`);
+            console.log(`Add create suite result, ${JSON.stringify(result2, undefined, 3)}`);
 
             const { data: result3 } = await github.rest.checks.create({
               owner: context.repo.owner,
@@ -43,4 +43,4 @@ jobs:
                 summary: 'This check will pass once the delay is over'
               }
             });
-            console.log(`Add create run result, ${JSON.stringify(result3), undefined, 3}`);
+            console.log(`Add create run result, ${JSON.stringify(result3, undefined, 3)}`);
