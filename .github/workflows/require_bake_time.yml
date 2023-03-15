@@ -21,11 +21,13 @@ jobs:
               repo: context.repo.repo,
               labels: ['bake-time']
             });
-            await github.rest.repos.createCommitStatus({
+            let result = await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
               state: 'failure',
               context: 'Bake time delay',
               description: 'Waiting for the bake time delay to pass before merging'
-            })
+            });
+
+            console.log(`Result of writing the commit status {result}`);
