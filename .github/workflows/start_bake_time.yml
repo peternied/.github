@@ -1,0 +1,16 @@
+name: Bake time
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  add_bake_time_delay:
+    name: "Add Bake Time Delay"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peternied/bake-time/start-baking@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
