@@ -21,13 +21,15 @@ jobs:
               repo: context.repo.repo,
               labels: ['bake-time']
             });
-            const { data: result} = await github.rest.repos.createCommitStatus({
+            await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.sha,
-              state: 'failure',
-              context: 'Bake time delay',
-              description: 'Waiting for the bake time delay to pass before merging'
+              name: 'Bake Time Delayed Check',
+              head_sha: context.sha,
+              status: 'completed',
+              conclusion: 'pending',
+              output: {
+                title: 'Waiting for the delay to pass before merging',
+                summary: 'This check will pass once the delay is over'
+              }
             });
-
-            console.log(`Result of writing the commit status {result}`);
