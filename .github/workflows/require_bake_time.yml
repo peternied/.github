@@ -15,6 +15,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            require('console-log-level')({ level: 'debug' })
             await github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
