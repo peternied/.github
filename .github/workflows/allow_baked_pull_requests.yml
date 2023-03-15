@@ -35,8 +35,8 @@ jobs:
                 name: 'Bake Time Delayed Check'
               });
 
-              const bakeTimeCheckRun = checkRuns.check_runs.filter(run => run.name === 'Bake Time Delayed Check')[0]
-              if (!checkRun) {
+              const bakeTimeCheckRun = checkRuns.check_runs.filter(run => run.name === 'Bake Time Delayed Check')[0];
+              if (!bakeTimeCheckRun) {
                 console.log(`No check named 'Bake Time Delayed Check' for PR #${pr.number}.`);
                 for (const run of checkRuns.check_runs) {
                   console.log(`Found ${run.id} named ${run.name} with status ${run.status} for PR #${pr.number}.`)
@@ -60,7 +60,7 @@ jobs:
                 const { data: checkUpdate } = await github.rest.checks.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
-                  check_run_id: checkRun.id,
+                  check_run_id: bakeTimeCheckRun.id,
                   status: 'completed',
                   conclusion: 'success',
                   output: {
