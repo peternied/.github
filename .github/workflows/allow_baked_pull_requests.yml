@@ -35,7 +35,7 @@ jobs:
                 name: 'Bake Time Delayed Check'
               });
 
-              const bakeTimeCheckRun = checkRuns.filter(run => run.name === 'Bake Time Delayed Check')[0]
+              const bakeTimeCheckRun = checkRuns.check_runs.filter(run => run.name === 'Bake Time Delayed Check')[0]
               if (!checkRun) {
                 console.log(`No check named 'Bake Time Delayed Check' for PR #${pr.number}.`);
                 for (const run of checkRuns.check_runs) {
