@@ -10,27 +10,28 @@ jobs:
   require_bake_time:
     runs-on: ubuntu-latest
     steps:
-      - run: yarn add -D console-log-level
       - name: Add a bake time delay before merge is allowed
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            var log = require('console-log-level')({ level: 'debug' })
-            await github.rest.issues.addLabels({
+            const { data: result1 } = await github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ['bake-time']
             });
 
-            await github.rest.checks.createSuite({
+            console.log(`Add label result, ${JSON.stringify(result1), undefined, 3}`);
+
+            const { data: result2 } = await github.rest.checks.createSuite({
               owner: context.repo.owner,
               repo: context.repo.repo,
               head_sha: context.sha,
             });
+            console.log(`Add create suite result, ${JSON.stringify(result2), undefined, 3}`);
 
-            await github.rest.checks.create({
+            const { data: result3 } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Bake Time Delayed Check',
@@ -42,3 +43,4 @@ jobs:
                 summary: 'This check will pass once the delay is over'
               }
             });
+            console.log(`Add create run result, ${JSON.stringify(result3), undefined, 3}`);
