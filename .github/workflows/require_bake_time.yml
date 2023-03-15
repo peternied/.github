@@ -10,12 +10,13 @@ jobs:
   require_bake_time:
     runs-on: ubuntu-latest
     steps:
+      - run: yarn add -D console-log-level
       - name: Add a bake time delay before merge is allowed
         uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          debug: true
           script: |
+            var log = require('console-log-level')({ level: 'debug' })
             await github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
