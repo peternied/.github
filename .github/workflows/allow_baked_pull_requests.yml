@@ -16,7 +16,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const delayHours = 24;
+            const delayHours = 0.01;
             const millisInAnHour = 60 * 60 * 1000;
             const delayMilliseconds = delayHours * millisInAnHour;
 

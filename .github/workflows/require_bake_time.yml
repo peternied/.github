@@ -30,8 +30,7 @@ jobs:
               repo: context.repo.repo,
               name: 'Bake Time Delayed Check',
               head_sha: context.payload.pull_request.head.sha,
-              status: 'completed',
-              conclusion: 'action_required',
+              status: 'in_progress',
               output: {
                 title: 'Waiting for the delay to pass before merging',
                 summary: 'This check will pass once the delay is over'
