@@ -40,10 +40,11 @@ jobs:
               });
 
               const checkRun = checkRuns.check_runs[0];
+              console.log(`Found check run for PR #${pr.number}, check run id ${checkRun.id}`);
 
               // Check if the pull request has not been updated in the specified delay
               if (now - updatedAt >= delayMilliseconds) {
-                console.log(`Marking status check as successful for PR #${pr.number}`);
+                console.log(`Marking status check as successful for PR #${pr.number}.`);
 
                 // Remove the label
                 await github.rest.issues.removeLabel({
