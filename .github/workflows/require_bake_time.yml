@@ -21,7 +21,7 @@ jobs:
               repo: context.repo.repo,
               labels: ['bake-time']
             });
-            let result = await github.rest.repos.createCommitStatus({
+            const { data: result} = await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
               sha: context.sha,
