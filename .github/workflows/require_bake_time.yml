@@ -15,6 +15,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            console.log(`Context of this request ${JSON.stringify(context, undefined, 3)}`);
             const { data: result1 } = await github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -24,14 +25,7 @@ jobs:
 
             console.log(`Add label result, ${JSON.stringify(result1, undefined, 3)}`);
 
-            const { data: result2 } = await github.rest.checks.createSuite({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head_sha: context.sha,
-            });
-            console.log(`Add create suite result, ${JSON.stringify(result2, undefined, 3)}`);
-
-            const { data: result3 } = await github.rest.checks.create({
+            const { data: result2 } = await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'Bake Time Delayed Check',
@@ -43,4 +37,4 @@ jobs:
                 summary: 'This check will pass once the delay is over'
               }
             });
-            console.log(`Add create run result, ${JSON.stringify(result3, undefined, 3)}`);
+            console.log(`Add create run result, ${JSON.stringify(result2, undefined, 3)}`);
