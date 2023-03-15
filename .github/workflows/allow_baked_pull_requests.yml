@@ -8,11 +8,7 @@ jobs:
   check_bake_time:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Remove the bake-time label and unblock mergeable_state
-        uses: actions/github-script@v5
+      - uses: actions/github-script@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -20,7 +16,7 @@ jobs:
             const millisInAnHour = 60 * 60 * 1000;
             const delayMilliseconds = delayHours * millisInAnHour;
 
-            // List all pull requests with the delayed-merge label
+            // List all pull requests with the bake-time label
             const { data: pullRequests } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -36,15 +32,14 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: pr.head.sha,
+                name: 'Bake Time Delayed Check'
               });
-              console.log(`Found check runs associated with SHA${pr.head.sha}, runs: ${checkRuns.check_runs.length}.`)
-
-              for (const run of checkRuns.check_runs) {
-                console.log(`For ${run.id}, was named ${run.name} status ${run.status}.`)
-              }
 
               const checkRun = checkRuns.check_runs[0];
-              console.log(`Found check run for PR #${pr.number}, check run id ${checkRun.id}`);
+              if (!checkRun) {
+                console.log(`No check named 'Bake Time Delayed Check' for PR #${pr.number}.`);
+                continue;
+              } 
 
               // Check if the pull request has not been updated in the specified delay
               if (now - updatedAt >= delayMilliseconds) {
@@ -70,7 +65,7 @@ jobs:
                     summary: 'The required delay is over, and the check has passed'
                   }
                 });
-                console.log(`Check marked as successful for PR #${pr.number}`);
+                console.log(`Check marked as successful for PR #${pr.number}.`);
               } else {
                 const timeRemaining = (delayMilliseconds - (now - updatedAt)) / (millisInAnHour);
                 console.log(`PR #${pr.number} still needs to wait for ${timeRemaining.toFixed(2)} hours before the delay is over.`);
