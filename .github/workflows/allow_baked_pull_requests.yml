@@ -37,7 +37,7 @@ jobs:
                 repo: context.repo.repo,
                 ref: pr.head.sha,
               });
-              console.log(`Found check runs associated with SHA${pr.head.sha}, runs: ${checkRuns.check_runs.length()}.`)
+              console.log(`Found check runs associated with SHA${pr.head.sha}, runs: ${checkRuns.check_runs.length}.`)
 
               for (const run of checkRuns.check_runs) {
                 console.log(`For ${run.id}, was named ${run.name} status ${run.status}.`)
